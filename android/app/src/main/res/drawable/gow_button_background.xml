@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado Pressionado / Clicado -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#4A0E0E"
+                android:endColor="#1E0505"
+                android:type="linear" />
+            <stroke
+                android:width="2dp"
+                android:color="#E53935" />
+            <corners android:radius="4dp" />
+            <padding
+                android:left="24dp"
+                android:top="14dp"
+                android:right="24dp"
+                android:bottom="14dp" />
+        </shape>
+    </item>
+
+    <!-- Estado Focado (Controle/Teclado/D-Pad) -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#2A1010"
+                android:endColor="#150808"
+                android:type="linear" />
+            <stroke
+                android:width="2dp"
+                android:color="#FF5252" />
+            <corners android:radius="4dp" />
+            <padding
+                android:left="24dp"
+                android:top="14dp"
+                android:right="24dp"
+                android:bottom="14dp" />
+        </shape>
+    </item>
+
+    <!-- Estado Padrão (Normal / Idle) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#1E1C1F"
+                android:centerColor="#141316"
+                android:endColor="#0C0B0D"
+                android:type="linear" />
+            <stroke
+                android:width="2dp"
+                android:color="#991B1B" />
+            <corners android:radius="4dp" />
+            <padding
+                android:left="24dp"
+                android:top="14dp"
+                android:right="24dp"
+                android:bottom="14dp" />
+        </shape>
+    </item>
+</selector>

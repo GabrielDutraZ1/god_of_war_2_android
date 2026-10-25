@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A0C"
+    android:keepScreenOn="true">
+
+    <!-- Container Centralizado com Identidade Visual God of War -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingTop="20dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="20dp">
+
+        <!-- Título Épico com Sombra Vermelha em Relevo (Glow Espartano) -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:letterSpacing="0.18"
+            android:shadowColor="#B91C1C"
+            android:shadowDx="0"
+            android:shadowDy="4"
+            android:shadowRadius="16"
+            android:text="GOD OF WAR II"
+            android:textColor="#EFEFEF"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <!-- Subtítulo Temático -->
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.25"
+            android:text="STANDALONE EDITION FOR ANDROID"
+            android:textColor="#A08875"
+            android:textSize="12sp" />
+
+        <!-- Linha Divisória de Estilo Espartano -->
+        <View
+            android:layout_width="160dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#4A1212" />
+
+        <!-- Status / Orientação ao Jogador -->
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:maxWidth="520dp"
+            android:text="A imagem do jogo (ISO) não foi detectada automaticamente nas pastas padrão.\nSelecione o arquivo da sua cópia oficial para iniciar a jornada."
+            android:textColor="#C7C7C7"
+            android:textSize="14sp" />
+
+        <!-- Botão com Efeito de Pedra Escura e Borda Vermelha Espartana -->
+        <Button
+            android:id="@+id/btn_pick_iso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/gow_button_background"
+            android:fontFamily="serif"
+            android:letterSpacing="0.12"
+            android:minWidth="280dp"
+            android:text="SELECIONAR ISO DO JOGO"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Marca d'Água Oficial: Gambiarra Games -->
+    <TextView
+        android:id="@+id/tv_watermark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.15"
+        android:text="GAMBIARRA GAMES • gambiarra.games"
+        android:textColor="#55443B"
+        android:textSize="11sp" />
+
+</RelativeLayout>

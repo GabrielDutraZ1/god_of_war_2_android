@@ -1,0 +1,39 @@
+# Imagens de disco e jogos (Preservação de direitos autorais)
+*.iso
+*.ISO
+*.cso
+*.CSO
+*.chd
+*.CHD
+*.gz
+ISO/
+iso/
+
+# Arquivos brutos de BIOS externas
+bios/
+*.bin
+
+# Repositórios e clones temporários de referências
+references/
+
+# Pastas de saída e caches temporários
+dist/
+assets/
+.gradle/
+build/
+**/build/
+app/build/
+.cxx/
+.externalNativeBuild/
+
+# Configurações de IDE
+.idea/
+.vscode/
+*.iml
+local.properties
+.DS_Store
+Thumbs.db
+
+# APK Standalone disponível para download no repositório
+!releases/
+!releases/GodOfWar2-Standalone-arm64-v8a.apk
