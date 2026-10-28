@@ -1,4 +1,4 @@
-<div align="center">
+ <div align="center">
 
 # ⚔️ God of War II — Standalone Launcher (Android) ⚔️
 
@@ -7,7 +7,7 @@
 [![Gambiarra Games](https://img.shields.io/badge/Projeto_por-Gambiarra_Games-red?style=for-the-badge&logo=playstation)](https://gambiarra.games)
 [![Target Architecture](https://img.shields.io/badge/ABI-arm64--v8a-blue?style=for-the-badge)](https://developer.android.com/ndk)
 [![Graphics Backend](https://img.shields.io/badge/API-Vulkan_1.1+-green?style=for-the-badge&logo=vulkan)](https://www.khronos.org/vulkan/)
-[![License](https://img.shields.io/badge/License-GPL_/_LGPL-orange?style=for-the-badge)](LICENSE)
+[![License](https://img.shields.io/badge/License-GPL_LGPL-orange?style=for-the-badge)](LICENSE)
 
 <br/>
 
@@ -16,6 +16,7 @@
 ---
 
 ### 📦 [CLIQUE AQUI PARA BAIXAR O APK COMPILADO (arm64-v8a)](releases/GodOfWar2-Standalone-arm64-v8a.apk)
+
 *(Tamanho: 10.89 MB • Versão Standalone Pronta para Instalar)*
 
 ---
@@ -24,92 +25,139 @@
 
 ## 📖 Visão Geral
 
-Este projeto transforma a experiência de executar o clássico **God of War II** no Android. Inspirado na arquitetura e filosofia de projetos de standalone port (como **Dusklight** e **God of War Collection I & II para PC**), eliminamos qualquer interface genérica de emulador, seletores de ROMs poluídos e menus intrusivos.
+Este projeto busca oferecer uma experiência dedicada para executar o clássico **God of War II** no Android. Inspirado na arquitetura e filosofia de projetos de standalone port, como Dusklight e God of War Collection I & II para PC, o objetivo é reduzir a necessidade de interfaces genéricas de emulador, seletores de jogos e menus intermediários.
 
-Ao abrir o aplicativo:
-1. O jogo **God of War II** inicia de forma transparente e em tela cheia (1-clique).
-2. As configurações de hardware, speedhacks e renderização são forçadas nativamente para garantir **60 FPS** estáveis sem quebras visuais.
-3. Não há menus de emulador intermediários nem necessidade de configurar controles do zero.
+A proposta do aplicativo é:
+
+1. Iniciar o jogo God of War II diretamente, em tela cheia, quando a configuração estiver concluída.
+2. Aplicar configurações de renderização e desempenho compatíveis com o hardware disponível.
+3. Simplificar a inicialização e o uso dos controles, evitando configurações desnecessárias.
+
+**Observação:** os resultados de desempenho dependem do dispositivo, do backend gráfico, da versão do emulador e das configurações utilizadas. A estabilidade de 60 FPS não é garantida em todos os aparelhos.
 
 ---
 
-## ⚡ Perfil de Hardware Hardcoded (C++ / NDK)
+## ⚡ Perfil de Hardware (C++ / NDK)
 
-Para garantir que God of War II rode sem os conhecidos problemas de ghosting, linhas pretas e slowdowns em chips móveis (Qualcomm Snapdragon Adreno e ARM Mali), os seguintes parâmetros são injetados obrigatoriamente no boot:
+O projeto prevê um perfil de configuração voltado à execução do God of War II em dispositivos Android com arquitetura ARM64, incluindo aparelhos com GPUs Qualcomm Adreno e ARM Mali.
 
-| Parâmetro | Valor Forçado | Benefício Técnico no God of War 2 |
+Os parâmetros abaixo representam o perfil pretendido e devem ser confirmados na implementação efetiva do projeto:
+
+| Parâmetro | Configuração pretendida | Objetivo |
 | :--- | :--- | :--- |
-| **Backend Gráfico** | `Vulkan (12)` | Draw calls otimizadas e overhead reduzido de CPU no Android. |
-| **MTVU1** | `Ativado (True)` | Separa a Vector Unit 1 em um núcleo ARM dedicado (dobro de performance em geometria). |
-| **VU1 Instant** | `Ativado (True)` | Reduz latência na fila de microcódigo de animação de vértices de Kratos e inimigos. |
-| **EE Cycle Rate** | `100% Nominal (0)` | Evita descompasso de áudio nas cutscenes e lentidão no motor de física. |
-| **EE Cycle Skip** | `0 (Desativado)` | **Crucial:** O frame skipping de ciclos no EE quebra os QTEs e gera flickering violento no HUD. |
-| **Fastmem** | `Ativado (True)` | Mapeamento direto de memória virtual do EE para 64 bits. |
-| **Half Pixel Offset** | `Modo 2 (Texture)` | **GS Fix:** Elimina o efeito de ghosting / bloom deslocado ao redor de Kratos. |
-| **Align Sprite** | `Ativado (1)` | **GS Fix:** Corrige linhas verticais que cruzam a água e névoa no Colosso de Rodes. |
-| **Round Sprite** | `Ativado (1)` | **GS Fix:** Corrige artefatos de borda nos medidores de orbs e vida. |
-| **Proporção** | `16:9 Widescreen` | Widescreen nativo via PNACH Hor+ sem deformação de imagem. |
+| **Backend gráfico** | Vulkan, quando compatível | Reduzir o overhead gráfico e melhorar o desempenho. |
+| **MTVU** | Ativado, quando suportado | Aproveitar o processamento multithread da unidade vetorial. |
+| **VU1 Instant** | Conforme suporte do emulador | Ajustar o processamento de microprogramas vetoriais. |
+| **EE Cycle Rate** | 100% nominal | Preservar a sincronização e a compatibilidade do jogo. |
+| **EE Cycle Skip** | 0, inicialmente | Evitar problemas de sincronização e compatibilidade. |
+| **Fastmem** | Ativado, quando compatível | Otimizar o acesso à memória em implementações que suportem esse recurso. |
+| **Half-Pixel Offset** | Conforme necessidade | Corrigir problemas de posicionamento e renderização de texturas. |
+| **Align Sprite** | Conforme necessidade | Corrigir artefatos gráficos em sprites. |
+| **Round Sprite** | Conforme necessidade | Melhorar a renderização de determinados elementos gráficos. |
+| **Proporção** | 16:9, quando suportado | Utilizar uma apresentação widescreen compatível com o jogo. |
+
+A aplicação dessas configurações depende do mecanismo de emulação integrado e das opções realmente disponíveis. Os parâmetros não devem ser considerados injetados ou forçados até que isso seja confirmado no código.
 
 ---
 
 ## 🕹️ Como Usar (Guia do Jogador)
 
 > [!IMPORTANT]
-> **Política de Preservação e Direitos Autorais:** 
-> Este pacote **NÃO** acompanha e **NÃO** fornece imagens protegidas por direitos autorais (arquivos ISO). O usuário deve utilizar o dump legal da sua própria mídia física de PlayStation 2.
+> **Preservação e direitos autorais:** este projeto não deve distribuir imagens de jogos protegidos por direitos autorais sem autorização. Utilize uma cópia obtida legalmente da sua própria mídia de PlayStation 2, respeitando a legislação aplicável.
 
 ### Passo 1: Instale o APK
-Baixe e instale o pacote [releases/GodOfWar2-Standalone-arm64-v8a.apk](releases/GodOfWar2-Standalone-arm64-v8a.apk) em seu celular ou tablet Android (ARM64).
 
-### Passo 2: Posicione a sua ISO
-O aplicativo possui o sistema autônomo **IsoLocator**, que busca automaticamente nos seguintes locais:
+Baixe e instale o pacote Android ARM64:
+
+[GodOfWar2-Standalone-arm64-v8a.apk](releases/GodOfWar2-Standalone-arm64-v8a.apk)
+
+O arquivo precisa existir nesse caminho do repositório para que o link funcione.
+
+### Passo 2: Posicione sua ISO
+
+O aplicativo prevê a busca de imagens do jogo nos seguintes locais:
+
 - `/storage/emulated/0/GodOfWar2/gow2.iso`
 - `/storage/emulated/0/Download/gow2.iso`
 - `/storage/emulated/0/PS2/gow2.iso`
-- Ou no armazenamento privado do próprio app (`Android/data/xyz.aethersx2.android/files/`).
+- Armazenamento privado do aplicativo, conforme a implementação e as permissões disponíveis.
 
-Formatos aceitos: `.iso`, `.cso`, `.chd` e `.gz` (Versões Americana `SCUS-97481` e Europeia `SCES-54206`).
+Formatos previstos: `.iso`, `.cso`, `.chd` e `.gz`, dependendo do suporte efetivamente implementado.
+
+Identificadores de referência:
+
+- Versão americana: `SCUS-97481`
+- Versão europeia: `SCES-54206`
+
+O suporte a cada formato e região deve ser validado no mecanismo de inicialização utilizado.
 
 ### Passo 3: Primeiro Boot
-- Se a ISO for encontrada nas pastas padrão, o jogo iniciará **instantaneamente**.
-- Caso contrário, uma tela com a identidade visual espartana será exibida com um botão de pedra e borda carmim para você selecionar o arquivo da sua cópia uma única vez. O app salvará a permissão de forma permanente.
+
+Quando uma imagem compatível for localizada e todas as configurações necessárias estiverem concluídas, o aplicativo poderá iniciar o jogo.
+
+Se nenhuma imagem for encontrada, o comportamento esperado é apresentar uma interface para selecionar o arquivo e conceder as permissões necessárias. A persistência dessas permissões depende da implementação do aplicativo.
 
 ---
 
 ## 🛠️ Arquitetura do Workspace
 
+A estrutura abaixo representa a organização pretendida para o projeto. Os arquivos e diretórios devem ser conferidos no repositório para confirmar sua existência.
+
 ```text
+Gof_of_war_2/
 ├── android/
-│   ├── app/
-│   │   ├── src/main/
-│   │   │   ├── AndroidManifest.xml             # Entrada única e stripping de UI
-│   │   │   ├── java/com/gow2/launcher/
-│   │   │   │   ├── GodOfWarLauncherActivity.java # Atividade de lançamento Fullscreen
-│   │   │   │   ├── IsoLocator.java             # Motor de busca autônoma de ISO
-│   │   │   │   └── HardwareProfileManager.java # Injeção de perfil de hardware
-│   │   │   ├── cpp/
-│   │   │   │   ├── gow2_hardware_profile.h     # Definições C++20 de baixo nível
-│   │   │   │   ├── gow2_hardware_profile.cpp   # Perfil de speedhacks e fixes
-│   │   │   │   └── gow2_native_bridge.cpp      # Ponte JNI
-│   │   │   ├── assets/
-│   │   │   │   └── patches/                    # Patches PNACH Widescreen 16:9 & Skip FMV
-│   │   │   └── res/
-│   │   │       ├── drawable/gow_button_background.xml # Botão pedra/borda carmim
-│   │   │       └── layout/activity_launcher.xml       # UI com marca d'água
-├── dist/                                       # Pasta com o APK gerado
-├── releases/                                   # Download direto do APK para o GitHub
-└── tools/
-    ├── patch_apk.ps1                           # Script de stripping automatizado
-    └── build_release_apk.ps1                   # Pipeline de compilação Release ARM64
+│   └── app/
+│       └── src/
+│           └── main/
+│               ├── AndroidManifest.xml
+│               ├── java/
+│               │   └── com/gow2/launcher/
+│               │       ├── GodOfWarLauncherActivity.java
+│               │       ├── IsoLocator.java
+│               │       └── HardwareProfileManager.java
+│               ├── cpp/
+│               │   ├── gow2_hardware_profile.h
+│               │   ├── gow2_hardware_profile.cpp
+│               │   └── gow2_native_bridge.cpp
+│               ├── assets/
+│               │   └── patches/
+│               └── res/
+│                   ├── drawable/
+│                   │   └── gow_button_background.xml
+│                   └── layout/
+│                       └── activity_launcher.xml
+├── dist/
+├── releases/
+├── tools/
+│   ├── patch_apk.ps1
+│   └── build_release_apk.ps1
+├── README.md
+└── LICENSE
 ```
+
+### Componentes previstos
+
+- **GodOfWarLauncherActivity.java:** atividade principal e interface de inicialização.
+- **IsoLocator.java:** busca e localização da imagem do jogo.
+- **HardwareProfileManager.java:** gerenciamento das configurações de desempenho.
+- **gow2_hardware_profile.h / .cpp:** parâmetros de configuração nativa.
+- **gow2_native_bridge.cpp:** integração entre Java e código nativo por JNI.
+- **patch_apk.ps1:** automação de modificações previstas no pacote.
+- **build_release_apk.ps1:** automação da compilação de uma versão de lançamento.
+
+A disponibilidade e a função de cada componente dependem dos arquivos presentes na versão atual do projeto.
 
 ---
 
 ## ⚖️ Isenção Legal / Disclaimer
 
-Este projeto é uma iniciativa comunitária sem fins comerciais mantida por **Gambiarra Games** (`gambiarra.games`).
-- Não possui afiliação, patrocínio ou endosso da **Sony Interactive Entertainment** ou dos desenvolvedores originais de God of War.
-- Todas as marcas registradas, títulos e logos pertencem aos seus respectivos proprietários.
+Este projeto é uma iniciativa comunitária associada à marca **Gambiarra Games** (`gambiarra.games`).
+
+- Não possui afiliação, patrocínio ou endosso da Sony Interactive Entertainment ou dos desenvolvedores originais de God of War.
+- God of War II e suas marcas, personagens e elementos relacionados pertencem aos respectivos titulares de direitos.
+- Este repositório não deve incluir conteúdo protegido por direitos autorais sem autorização.
+- A compatibilidade, o desempenho e o funcionamento dependem do dispositivo Android, dos componentes utilizados e da configuração do usuário.
+- Referências a tecnologias, projetos e mecanismos de emulação não implicam parceria ou endosso por seus respectivos responsáveis.
 
 <br/>
 
