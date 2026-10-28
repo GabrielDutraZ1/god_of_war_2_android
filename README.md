@@ -1,1 +1,0 @@
-# god_of_war_2_android
